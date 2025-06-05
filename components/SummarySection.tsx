@@ -1,13 +1,10 @@
 'use client';
-import { useState } from 'react';
+import { useQuotation } from './QuotationContext';
 
-interface Props {
-  subtotal: number;
-}
+export default function SummarySection() {
+  const { items, taxRate, setTaxRate, extra, setExtra } = useQuotation();
 
-export default function SummarySection({ subtotal }: Props) {
-  const [taxRate, setTaxRate] = useState(5);
-  const [extra, setExtra] = useState(0);
+  const subtotal = items.reduce((sum, it) => sum + it.price * it.quantity, 0);
 
   const tax = (subtotal * taxRate) / 100;
   const total = subtotal + tax + extra;
@@ -15,7 +12,7 @@ export default function SummarySection({ subtotal }: Props) {
   return (
     <div className="mt-6 space-y-2 border-t pt-4">
       <div className="flex items-center gap-2">
-        <label className="w-24">Tax %</label>
+        <label className="w-24">稅率 %</label>
         <input
           type="number"
           value={taxRate}
@@ -24,7 +21,7 @@ export default function SummarySection({ subtotal }: Props) {
         />
       </div>
       <div className="flex items-center gap-2">
-        <label className="w-24">Extra</label>
+        <label className="w-24">其他費用</label>
         <input
           type="number"
           value={extra}
@@ -32,9 +29,9 @@ export default function SummarySection({ subtotal }: Props) {
           className="border px-2"
         />
       </div>
-      <div className="text-right font-semibold mt-2">Subtotal: {subtotal}</div>
-      <div className="text-right font-semibold">Tax: {tax}</div>
-      <div className="text-right font-bold">Total: {total}</div>
+      <div className="text-right font-semibold mt-2">小計：{subtotal}</div>
+      <div className="text-right font-semibold">稅額：{tax}</div>
+      <div className="text-right font-bold">合計：{total}</div>
     </div>
   );
 }
