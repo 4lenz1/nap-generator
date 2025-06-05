@@ -1,3 +1,4 @@
+'use client';
 import { createContext, useContext, useState, ReactNode } from 'react';
 
 export interface HeaderData {
@@ -31,7 +32,9 @@ const defaultHeader: HeaderData = {
   date: new Date().toISOString().slice(0, 10),
 };
 
-const QuotationContext = createContext<QuotationContextValue | undefined>(undefined);
+const QuotationContext = createContext<QuotationContextValue | undefined>(
+  undefined
+);
 
 export function QuotationProvider({ children }: { children: ReactNode }) {
   const [header, setHeader] = useState<HeaderData>(defaultHeader);
@@ -41,7 +44,16 @@ export function QuotationProvider({ children }: { children: ReactNode }) {
 
   return (
     <QuotationContext.Provider
-      value={{ header, setHeader, items, setItems, taxRate, setTaxRate, extra, setExtra }}
+      value={{
+        header,
+        setHeader,
+        items,
+        setItems,
+        taxRate,
+        setTaxRate,
+        extra,
+        setExtra,
+      }}
     >
       {children}
     </QuotationContext.Provider>
